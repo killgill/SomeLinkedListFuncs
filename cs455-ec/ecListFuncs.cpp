@@ -16,8 +16,30 @@ using namespace std;
 
 int numRuns(ListType list) {
 
-    return 0;  // stub code to get it to compile
-
+    int sum = 0;
+    int yes = 0;
+    Node *curr = list;
+    Node *prev = list;
+    while (curr->next != NULL) {
+        prev = curr;
+        curr = curr->next;
+        if (curr->data == prev->data) {
+            switch (yes)
+            {
+            case 0: {
+                yes = 1;
+                sum++;
+                break;
+            }
+            default:
+                break;
+            }
+        }
+        else {
+            yes = 0;
+        }
+    }
+    return sum;
 }
 
 
