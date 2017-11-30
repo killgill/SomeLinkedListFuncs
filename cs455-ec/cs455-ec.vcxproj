@@ -111,6 +111,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ecListFuncs.cpp" />
+    <ClCompile Include="ectest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ecListFuncs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
