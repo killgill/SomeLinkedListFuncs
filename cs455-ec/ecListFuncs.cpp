@@ -46,18 +46,66 @@ int numRuns(ListType list) {
 
 ListType reverseCopy(ListType list) {
 
-    return NULL;  // stub code to get it to compile
+
+    Node *curr = list;
+    if (curr == NULL) {
+        return NULL;
+    }
+    ListType reverse = new Node(curr->data, NULL);
+    while (curr->next != NULL) {
+        curr = curr->next;
+        reverse = new Node(curr->data, reverse);
+    }
+    return reverse;
 
 }
 
 
 
 void removeMiddleElmt(ListType &list) {
+    if (list != NULL) {
+        int sum = 0;
+        Node *curr = list;
+        while (curr != NULL) {
+            sum++;
+            curr = curr->next;
+        }
+        curr = list;
+        switch (sum)
+        {
+        case 0: {
+            break;
+        }
+        case 1: {
+            delete curr;
+            list = NULL;
+            break;
+        }
+        case 2: {
+            list = curr->next;
+            delete curr;
+            break;
+        }
+        default: {
+            int mid = sum / 2;
+            int count = 0;
+            curr = list->next;
+            Node *prev = list;
+            while (count < mid - 1) {
+                prev = curr;
+                curr = curr->next;
+                count++;
+            }
+            prev->next = curr->next;
+            delete curr;
+            break;
+        }
+        }
+        }
+    }
 
-}
 
 
+    void splitOn(ListType &list, int splitVal, ListType &a, ListType &b) {
 
-void splitOn(ListType &list, int splitVal, ListType &a, ListType &b) {
-
-}
+    }
