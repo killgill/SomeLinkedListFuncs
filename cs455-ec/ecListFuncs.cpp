@@ -98,7 +98,7 @@ void removeMiddleElmt(ListType &list) {
                 curr = list->next;
                 Node *prev = list;
                 //counts to the middle
-                while (count < mid - 1) {
+                while (count < mid - 2) {
                     prev = curr;
                     curr = curr->next;
                     count++;
