@@ -16,6 +16,9 @@ using namespace std;
 
 int numRuns(ListType list) {
 
+    if (list == NULL) {
+        return 0;
+    }
     int sum = 0;
     int yes = 0;
     Node *curr = list;
@@ -107,5 +110,38 @@ void removeMiddleElmt(ListType &list) {
 
 
     void splitOn(ListType &list, int splitVal, ListType &a, ListType &b) {
-
+        Node *curr = list;
+        if (curr->data != splitVal) {
+            a = curr;
+            Node *foo = a;
+            while (curr->next != NULL && curr->next->data != splitVal) {
+                foo->next = curr->next;
+                curr = curr->next;
+                foo = foo->next;
+            }
+            if (foo->next != NULL) {
+                Node *del = curr->next;
+                curr = curr->next->next;
+                foo->next = NULL;
+                delete del;
+                b = curr;
+                foo = b;
+                while (curr != NULL) {
+                    foo->next = curr->next;
+                    curr = curr->next;
+                    foo = foo->next;
+                }
+            }
+        }
+        else {
+            curr = curr->next;
+            b = curr;
+            Node *foo = b;
+            while (curr != NULL) {
+                foo->next = curr->next;
+                curr = curr->next;
+                foo = foo->next;
+            }
+        }
+        list = NULL;
     }
