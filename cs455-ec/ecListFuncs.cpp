@@ -1,5 +1,5 @@
-/*  Name:
-*  USC NetID:
+/*  Name: Karan Singh Gill 
+*  USC NetID: karansig
 *  CS 455 Fall 2017
 *
 *  See ecListFuncs.h for specification of each function.
@@ -26,8 +26,9 @@ int numRuns(ListType list) {
     while (curr->next != NULL) {
         prev = curr;
         curr = curr->next;
+        //if the previous data is the same as the current, we're in a run
         if (curr->data == prev->data) {
-            switch (yes)
+            switch (yes) //use this switch so that a run longer than 2 elements isn't an issue
             {
             case 0: {
                 yes = 1;
@@ -54,6 +55,7 @@ ListType reverseCopy(ListType list) {
     if (curr == NULL) {
         return NULL;
     }
+    //simple loop builds the new list from the front
     ListType reverse = new Node(curr->data, NULL);
     while (curr->next != NULL) {
         curr = curr->next;
@@ -66,66 +68,74 @@ ListType reverseCopy(ListType list) {
 
 
 void removeMiddleElmt(ListType &list) {
-    if (list != NULL) {
+    if (list != NULL) { //ensures list isn't null
         int sum = 0;
         Node *curr = list;
+        //finds number of elements
         while (curr != NULL) {
             sum++;
             curr = curr->next;
         }
         curr = list;
-        switch (sum)
-        {
-        case 0: {
-            break;
-        }
-        case 1: {
-            delete curr;
-            list = NULL;
-            break;
-        }
-        case 2: {
-            list = curr->next;
-            delete curr;
-            break;
-        }
-        default: {
-            int mid = sum / 2;
-            int count = 0;
-            curr = list->next;
-            Node *prev = list;
-            while (count < mid - 1) {
-                prev = curr;
-                curr = curr->next;
-                count++;
+        //different cases are needed for 0, 1, or 2 elements
+        switch (sum){
+            case 0: { //not strictly needed, but better to have it
+                break;
             }
-            prev->next = curr->next;
-            delete curr;
-            break;
-        }
-        }
+            case 1: {//deletes the element
+                delete curr;
+                list = NULL;
+                break;
+            }
+            case 2: {//deletes the first element and fixes pointers
+                list = curr->next;
+                delete curr;
+                break;
+            }
+            default: { //for all other cases
+                int mid = sum / 2;
+                int count = 0;
+                curr = list->next;
+                Node *prev = list;
+                //counts to the middle
+                while (count < mid - 1) {
+                    prev = curr;
+                    curr = curr->next;
+                    count++;
+                }
+                //links element before middle to element after middle
+                prev->next = curr->next;
+                //delete the middle node
+                delete curr;
+                break;
+            }
         }
     }
+}
 
 
 
-    void splitOn(ListType &list, int splitVal, ListType &a, ListType &b) {
-        Node *curr = list;
-        if (curr->data != splitVal) {
-            a = curr;
+void splitOn(ListType &list, int splitVal, ListType &a, ListType &b) {
+    Node *curr = list;
+    if (curr != NULL){//make sure list isn't empty
+        if (curr->data != splitVal) { //make sure the first element is splitVal
+            a = curr; //sets first element of a to first element of list
             Node *foo = a;
+            //progresses until either the end of the list or splitVal
             while (curr->next != NULL && curr->next->data != splitVal) {
                 foo->next = curr->next;
                 curr = curr->next;
                 foo = foo->next;
             }
+            //assuming we reached splitVal rather than the end of the list
             if (foo->next != NULL) {
                 Node *del = curr->next;
-                curr = curr->next->next;
-                foo->next = NULL;
-                delete del;
-                b = curr;
+                curr = curr->next->next;//skips past the node to be deleted
+                foo->next = NULL;//makes the last element of a point to NULL
+                delete del; //deletes superfluous element
+                b = curr; //starts b at the element after Splitval
                 foo = b;
+                //same as before
                 while (curr != NULL) {
                     foo->next = curr->next;
                     curr = curr->next;
@@ -133,7 +143,7 @@ void removeMiddleElmt(ListType &list) {
                 }
             }
         }
-        else {
+        else { //if first element is splitval, we just put the rest of the list into b
             curr = curr->next;
             b = curr;
             Node *foo = b;
@@ -143,5 +153,6 @@ void removeMiddleElmt(ListType &list) {
                 foo = foo->next;
             }
         }
-        list = NULL;
+        list = NULL; //stops the list from pointing to it's previous elements        
     }
+}
